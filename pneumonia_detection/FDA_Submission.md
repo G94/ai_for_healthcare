@@ -28,17 +28,27 @@ Identification of Pneumonia from X-Ray imaging
 
 
 **Clinical Impact of Performance:**
-
+- 
 ### 2. Algorithm Design and Function
 
-<< Insert Algorithm Flowchart >>
+
+![flow_chart](img/flow_chart.PNG)
+
 
 **DICOM Checking Steps:**
-
+- The first validation is to check if the `patient position` is **PA** or **AP**.
+- The second validation is to check the `modality` value is **DX** (Digital Radiography).
+- The third validation is to check that the `body part examined` is the **chest part**.
 
 
 **Preprocessing Steps:**
 
+Standarization:
+1. Divide into 255 to scale the image
+2. Extract the mean of the image
+
+Normalization:
+3. Divide into the standard deviation
 
 **CNN Architecture:**
 
@@ -82,7 +92,7 @@ dense_3 (Dense)              (None, 1)                 257
 
 
 * Batch size
-    
+
     16
 
 * Optimizer learning rate
@@ -90,10 +100,64 @@ dense_3 (Dense)              (None, 1)                 257
     0.001
 
 * Layers of pre-existing architecture that were frozen
-  The first 17 layers of the pretrained model were frozen.
+    
+    The first 17 layers of the pretrained model were frozen.
+
 
 * Layers of pre-existing architecture that were fine-tuned
-    None
+
+
+![VGG16](img/vgg_architecture.PNG)
+
+
+```
+Model: "model_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         (None, 224, 224, 3)       0         
+_________________________________________________________________
+block1_conv1 (Conv2D)        (None, 224, 224, 64)      1792      
+_________________________________________________________________
+block1_conv2 (Conv2D)        (None, 224, 224, 64)      36928     
+_________________________________________________________________
+block1_pool (MaxPooling2D)   (None, 112, 112, 64)      0         
+_________________________________________________________________
+block2_conv1 (Conv2D)        (None, 112, 112, 128)     73856     
+_________________________________________________________________
+block2_conv2 (Conv2D)        (None, 112, 112, 128)     147584    
+_________________________________________________________________
+block2_pool (MaxPooling2D)   (None, 56, 56, 128)       0         
+_________________________________________________________________
+block3_conv1 (Conv2D)        (None, 56, 56, 256)       295168    
+_________________________________________________________________
+block3_conv2 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_conv3 (Conv2D)        (None, 56, 56, 256)       590080    
+_________________________________________________________________
+block3_pool (MaxPooling2D)   (None, 28, 28, 256)       0         
+_________________________________________________________________
+block4_conv1 (Conv2D)        (None, 28, 28, 512)       1180160   
+_________________________________________________________________
+block4_conv2 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_conv3 (Conv2D)        (None, 28, 28, 512)       2359808   
+_________________________________________________________________
+block4_pool (MaxPooling2D)   (None, 14, 14, 512)       0         
+_________________________________________________________________
+block5_conv1 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv2 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_conv3 (Conv2D)        (None, 14, 14, 512)       2359808   
+_________________________________________________________________
+block5_pool (MaxPooling2D)   (None, 7, 7, 512)         0         
+=================================================================
+```
+    - Total params: 14,714,688
+    - Trainable params: 14,714,688
+    - Non-trainable params: 0
+
 
 * Layers added to pre-existing architecture
 ```
@@ -105,6 +169,8 @@ dense_3 (Dense)              (None, 1)                 257
     
     model.add(Dense(1,  activation = 'sigmoid'))
 ```
+
+
 ----
 
 ![Train/Validation Loss](img/loss_plot.PNG)
@@ -136,7 +202,12 @@ The Final threshold was 0.3125
 
 ### 5. Ground Truth
 
+The dataset was labeled using Natural Language Processing from the associated radiological reports.
+The advantage of this method is that we can label many images in a short period of time.
+A representative sample of this dataset labeled can be contrasted against an specialist if neccesary.
 
+3. What are the limitations of the method through which the dataset was created ?
+The model has overall 10% error, The dataset might contain some erroneous labels.
 
 ### 6. FDA Validation Plan
 
