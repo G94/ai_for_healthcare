@@ -28,7 +28,9 @@ Identification of Pneumonia from X-Ray imaging
 
 
 **Clinical Impact of Performance:**
-- 
+- A `false positive` will  overcharge the priority list, making the radiologist focus on cases which don't need immadiatly attention.
+- A `false negative` will have a high impact in the prioritization of  the quee, putting patient in high risk in the final positions of the priority list.
+
 ### 2. Algorithm Design and Function
 
 
@@ -192,22 +194,22 @@ The Final threshold was 0.3125
 
 
 ### 4. Databases
- (For the below, include visualizations as they are useful and relevant)
 
 **Description of Training Dataset:** 
+![Training Images](img/training_data.PNG)
 
 
 **Description of Validation Dataset:** 
 
+![Validation Images](img/validation_data.PNG)
 
 ### 5. Ground Truth
 
-The dataset was labeled using Natural Language Processing from the associated radiological reports.
-The advantage of this method is that we can label many images in a short period of time.
+The dataset was labeled using Natural Language Processing from the associated radiological reports. The advantage of this method is that we can label many images in a short period of time.
 A representative sample of this dataset labeled can be contrasted against an specialist if neccesary.
 
 3. What are the limitations of the method through which the dataset was created ?
-The model has overall 10% error, The dataset might contain some erroneous labels.
+The model has overall 10% error, the dataset might contain some erroneous labels.
 
 ### 6. FDA Validation Plan
 
