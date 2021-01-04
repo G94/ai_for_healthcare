@@ -6,9 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+
+# files
+*.npz
+*.mat
+
 # Distribution / packaging
 .Python
-data_schema_references/
 data/
 out/
 build/
@@ -131,7 +135,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-*.csv
-*.xlsx
-
