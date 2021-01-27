@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import tensorflow as tf
-
+from random import sample
 ####### STUDENTS FILL THIS OUT ######
 #Question 3
 def reduce_dimension_ndc(df, ndc_df):
@@ -40,6 +40,38 @@ def patient_dataset_splitter(df, patient_key='patient_nbr'):
      - validation: pandas dataframe,
      - test: pandas dataframe,
     '''
+
+    df = df.iloc[np.random.permutation(len(df))]
+    
+    ## obtenemos la lista de pacientes unica
+    unique_values = df[patient_key].unique()
+    total_values = len(unique_values)
+    
+    ### calculate sample size
+    # 
+
+    sample_size_train = round(total_values* 0.6 )
+    print(sample_size_train)
+    patient_train = sample(list(unique_values), sample_size_train)
+    unique_values_dif = list(df.loc[~df[patient_key].isin(patient_train), patient_key].unique())
+    sample_size_test = round(len(unique_values_dif) * 0.5)
+    patient_val = sample(unique_values_dif, sample_size_test)
+    patient_test = df.loc[~df[patient_key].isin(patient_train + patient_val), patient_key].unique()
+
+
+    ### extraemos los datos de train en base a ala cantidad de pacientes unicos
+    train = df[df[patient_key].isin(patient_train)].reset_index(drop=True)
+    validation =  df[df[patient_key].isin(patient_val)].reset_index(drop=True)
+    test = df[df[patient_key].isin(patient_test)].reset_index(drop=True)
+    
+    print("Total number of unique patients in train = ", len(train[patient_key].unique()))
+    print("Total number of unique patients in validation = ", len(validation[patient_key].unique()))
+    print("Total number of unique patients in test = ", len(test[patient_key].unique()))
+    print("Training partition has a shape = ", train.shape) 
+    print("validation partition has a shape = ", validation.shape) 
+    print("Test partition has a shape = ", test.shape)   
+
+
     return train, validation, test
 
 #Question 7
