@@ -51,8 +51,6 @@ def patient_dataset_splitter(df, patient_key='patient_nbr'):
     total_values = len(unique_values)
     
     ### calculate sample size
-    # 
-
     sample_size_train = round(total_values* 0.6 )
     print(sample_size_train)
     patient_train = sample(list(unique_values), sample_size_train)
@@ -73,7 +71,6 @@ def patient_dataset_splitter(df, patient_key='patient_nbr'):
     print("Training partition has a shape = ", train.shape) 
     print("validation partition has a shape = ", validation.shape) 
     print("Test partition has a shape = ", test.shape)   
-
 
     return train, validation, test
 

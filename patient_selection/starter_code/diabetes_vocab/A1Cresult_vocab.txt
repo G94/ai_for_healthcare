@@ -1,5 +1,5 @@
 00
-None
->7
-Norm
 >8
+None
+Norm
+>7
